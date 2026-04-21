@@ -1,5 +1,5 @@
 #!/bin/bash
-export WANDB_API_KEY=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
+export WANDB_API_KEY=
 # Distributed training configuration
 MASTER_ADDR=${MASTER_ADDR:-"127.0.0.1"}
 MASTER_PORT=${MASTER_PORT:-$(shuf -i 20001-29999 -n 1)}

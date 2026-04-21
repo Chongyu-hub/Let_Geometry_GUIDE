@@ -1,5 +1,5 @@
 #!/bin/bash
-export WANDB_API_KEY=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
+export WANDB_API_KEY=
 # Distributed training configuration
 MASTER_ADDR=${MASTER_ADDR:-"127.0.0.1"}
 MASTER_PORT=${MASTER_PORT:-$(shuf -i 20001-29999 -n 1)}
@@ -63,9 +63,6 @@ args="
     --dataloader_num_workers 16 \
     --run_name ${run_name} \
     --report_to wandb \
-    --vgllm_resize False \
-    --vgllm_resize_mode "crop" \
-    --vgllm_target_size 544 \
     --use_geometry_inputs True \
     --use_geometry_encoder True \
     --use_feature_fusion_module True \

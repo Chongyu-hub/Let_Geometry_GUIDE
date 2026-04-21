@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+# 数据/模型/输出
+/data
+outputs/
+output/
+checkpoints/
+logs/
+pytorch3d/
+resized_undistorted_images_patched/
+cookbooks/
+data_download/
+docker/
+evaluation/
+transformers/
+wandb/
+web_demo_mm.py
+requirements_web_demo.txt
+patch_grid.py
+# 本地配置
+qwen-vl-finetune/install_requirements.sh
+.env
+.DS_Store
+.idea/
+.vscode/

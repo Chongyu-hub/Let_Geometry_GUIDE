@@ -40,10 +40,6 @@ class DataArguments:
     base_interval: int = field(default=2)
     max_pixels: int = field(default=28 * 28 * 576)
     min_pixels: int = field(default=28 * 28 * 16)
-    # VG-LLM style resize before image_processor patchification (only affects local processor)
-    vgllm_resize: bool = field(default=False)
-    vgllm_resize_mode: str = field(default="crop")  # "crop" or "pad"
-    vgllm_target_size: int = field(default=512)
     # Geometry inputs support (for VGGT encoder inputs in data preprocessing)
     use_geometry_inputs: bool = field(default=False)  # Whether to return geometry_encoder_inputs for VGGT encoder
     use_patch_size_alin: bool = field(default=False)  # Align geometry inputs to image_grid_thw * 14

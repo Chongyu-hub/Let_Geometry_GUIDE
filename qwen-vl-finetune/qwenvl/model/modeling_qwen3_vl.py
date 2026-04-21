@@ -50,7 +50,6 @@ from .feature_fusion import (
     FeatureFusionModule,
     GeometryFeatureMerger,
     GeometryMLPGate,
-    VGLLMStyleMLPGate,
 )
 from .geometry_encoders import GeometryEncoderConfig, create_geometry_encoder
 
@@ -1132,11 +1131,7 @@ class Qwen3VLModel(Qwen3VLPreTrainedModel):
                 geo_dim=self.geometry_encoder.get_feature_dim(),
                 spatial_merge_size=config.vision_config.spatial_merge_size,
             )
-        elif self.use_camera_method == "mlp_gate_vgllm":
-            self.geo_mlp_gate_vgllm = VGLLMStyleMLPGate(
-                geo_dim=self.geometry_encoder.get_feature_dim(),
-                spatial_merge_size=config.vision_config.spatial_merge_size,
-            )
+
 
         # --- Original geometry deepstack (list, merged with visual deepstack) ---
         self.geometry_deepstack_indexes = getattr(config, "geometry_deepstack_indexes", None)
@@ -1480,8 +1475,6 @@ class Qwen3VLModel(Qwen3VLPreTrainedModel):
                     raw_geo_embeds.append(features)
                 if self.use_camera_method == "mlp_gate":
                     gate_list.append(self.geo_mlp_gate(features))
-                if self.use_camera_method == "mlp_gate_vgllm":
-                    gate_list.append(self.geo_mlp_gate_vgllm(features))
                 if self.use_feature_fusion_module:
                     features = self.geometry_merger(features)
 
@@ -1593,12 +1586,6 @@ class Qwen3VLModel(Qwen3VLPreTrainedModel):
                 gate_cat = torch.cat(gate_list, dim=0)
                 geo_embeds = (1 + gate_cat) * geo_embeds
 
-            if self.use_camera_method == "mlp_gate_vgllm" and gate_list:
-                if not self._camera_method_logged:
-                    print("[Geometry Encoder] Applying VGLLMStyleMLPGate: output = 2d + gate*vggt")
-                    self._camera_method_logged = True
-                gate_cat = torch.cat(gate_list, dim=0)
-                geo_embeds = gate_cat * geo_embeds
 
             if self.use_camera_method == "adaLN_dual" and camera_features_list:
                 if not self._camera_method_logged:

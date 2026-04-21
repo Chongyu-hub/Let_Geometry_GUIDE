@@ -108,20 +108,11 @@ def train(attn_implementation="flash_attention_2"):
         cache_dir=training_args.cache_dir,
     )
     
-    # Set custom VG-LLM specific attributes to config
+    # Set custom attributes to config
     # These attributes will be saved in config.json and can be loaded during evaluation
     custom_config_attrs = []
     
-    # VG-LLM image preprocessing settings (from data_args)
-    if hasattr(data_args, "vgllm_resize"):
-        setattr(config, "vgllm_resize", data_args.vgllm_resize)
-        custom_config_attrs.append("vgllm_resize")
-    if hasattr(data_args, "vgllm_resize_mode"):
-        setattr(config, "vgllm_resize_mode", data_args.vgllm_resize_mode)
-        custom_config_attrs.append("vgllm_resize_mode")
-    if hasattr(data_args, "vgllm_target_size"):
-        setattr(config, "vgllm_target_size", data_args.vgllm_target_size)
-        custom_config_attrs.append("vgllm_target_size")
+   # Geometry inputs settings (from data_args)
     if hasattr(data_args, "use_geometry_inputs"):
         setattr(config, "use_geometry_inputs", data_args.use_geometry_inputs)
         custom_config_attrs.append("use_geometry_inputs")
